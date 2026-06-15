@@ -1,0 +1,13 @@
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+
+# Dependencies (por si se añade build en el futuro)
+node_modules/
+dist/
+*.log
