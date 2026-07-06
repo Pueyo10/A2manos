@@ -133,17 +133,20 @@
     });
   }
 
-  /* ---------- form -> mailto (no backend needed) ---------- */
+  /* ---------- form -> envío real (FormSubmit AJAX, fallback mailto) ---------- */
+  const FORM_ENDPOINT = 'https://formsubmit.co/ajax/lealsapedro@gmail.com';
   const form = $('#form');
   const note = $('#formNote');
   if (form) {
-    form.addEventListener('submit', e => {
+    form.addEventListener('submit', async e => {
       e.preventDefault();
       let ok = true;
       $$('.field', form).forEach(f => {
         const input = f.querySelector('input,textarea,select');
         if (!input) return;
-        const bad = input.hasAttribute('required') && !input.value.trim();
+        let bad = false;
+        if (input.type === 'checkbox') bad = input.hasAttribute('required') && !input.checked;
+        else bad = input.hasAttribute('required') && !input.value.trim();
         f.classList.toggle('invalid', bad);
         if (bad) ok = false;
       });
@@ -153,18 +156,45 @@
         return;
       }
       const d = new FormData(form);
+      if (d.get('company')) return; // honeypot: bots fuera
+
       const subject = `Solicitud de presupuesto — ${d.get('type') || 'A2manos'}`;
-      const body =
-        `Nombre: ${d.get('name')}\n` +
-        `Teléfono: ${d.get('phone')}\n` +
-        `Email: ${d.get('email') || '—'}\n` +
-        `Tipo de trabajo: ${d.get('type')}\n\n` +
-        `${d.get('msg')}`;
-      window.location.href =
-        `mailto:lealsapedro@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      note.textContent = 'Abriendo tu correo… si no se abre, escríbenos a lealsapedro@gmail.com';
-      note.className = 'form__note ok';
-      form.reset();
+      const btn = form.querySelector('button[type=submit]');
+      btn.disabled = true;
+      note.textContent = 'Enviando…';
+      note.className = 'form__note';
+      try {
+        const r = await fetch(FORM_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            Nombre: d.get('name'),
+            Teléfono: d.get('phone'),
+            Email: d.get('email') || '—',
+            'Tipo de trabajo': d.get('type'),
+            Mensaje: d.get('msg'),
+            _subject: subject,
+            _template: 'table',
+            _captcha: 'false'
+          })
+        });
+        const j = await r.json().catch(() => ({}));
+        if (!r.ok || !(j.success === true || j.success === 'true')) throw new Error(j.message || 'send failed');
+        note.textContent = '¡Solicitud enviada! Te contactamos muy pronto.';
+        note.className = 'form__note ok';
+        form.reset();
+      } catch (err) {
+        // fallback: abrir el correo del visitante con todo relleno
+        const body =
+          `Nombre: ${d.get('name')}\nTeléfono: ${d.get('phone')}\nEmail: ${d.get('email') || '—'}\n` +
+          `Tipo de trabajo: ${d.get('type')}\n\n${d.get('msg')}`;
+        window.location.href =
+          `mailto:lealsapedro@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        note.textContent = 'No se pudo enviar automáticamente. Te abrimos el correo — o llámanos al 623 067 554.';
+        note.className = 'form__note err';
+      } finally {
+        btn.disabled = false;
+      }
     });
   }
 })();
