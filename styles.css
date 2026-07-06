@@ -289,7 +289,7 @@ body.is-loaded .hero__title .word[data-stagger]{transition-delay:calc(var(--i,0)
 /* hero mark — official emblem image, feathered into the background */
 .hero__stage{display:flex;align-items:center;justify-content:center;width:100%}
 .hero__mark{position:relative;display:flex;flex-direction:column;align-items:center}
-.mark-img{width:min(100%,470px);height:auto}
+.mark-img{width:min(100%,540px);height:auto}
 
 /* animated hand + tool (atornillando) — subtle slow turn */
 .tool-svg{width:100%;height:auto;overflow:visible}
