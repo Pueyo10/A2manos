@@ -424,21 +424,26 @@ body.is-loaded .hands-lockup .lockup__a2{opacity:1;transform:none;transition-del
 .tile{position:relative;grid-column:span 3;border-radius:14px;overflow:hidden;background:var(--char-2);aspect-ratio:16/11}
 .tile--tall{grid-row:span 2;aspect-ratio:auto}
 .tile--wide{grid-column:span 6;aspect-ratio:21/8}
-.tile__img{position:absolute;inset:0;transition:transform .9s var(--e-expo)}
+.tile__img{position:absolute;inset:0;transition:transform .9s var(--e-expo);display:flex;align-items:center;justify-content:center}
 .tile:hover .tile__img{transform:scale(1.06)}
-/* CSS-art backgrounds (placeholder — swap for photos) */
+/* ilustraciones provisionales (line-art) hasta tener fotos reales */
+.tile__img svg{width:86%;height:80%;}
+.ti-ln{stroke:#c9c4ba;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round;opacity:.85}
+.ti-ac{stroke:var(--orange);stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.ti-acf{fill:var(--orange)}
+.ti-soft{stroke:#c9c4ba;stroke-width:2;opacity:.28;fill:none}
 .tile__img[data-art="bano"]{background:
   radial-gradient(120% 80% at 20% 0%,rgba(238,106,31,.12),transparent 55%),
-  repeating-linear-gradient(135deg,#26241f 0 26px,#2c2a24 26px 52px),linear-gradient(160deg,#322f29,#1d1b18)}
+  linear-gradient(160deg,#2e2b26,#1d1b18)}
 .tile__img[data-art="ventana"]{background:
-  linear-gradient(180deg,rgba(238,106,31,.16),transparent 60%),
-  conic-gradient(from 210deg at 70% 30%,#2e2b25,#3a362f,#23211d),#26241f}
+  linear-gradient(180deg,rgba(238,106,31,.13),transparent 60%),
+  linear-gradient(200deg,#2c2a25,#211f1b)}
 .tile__img[data-art="cocina"]{background:
   radial-gradient(90% 90% at 80% 10%,rgba(238,106,31,.14),transparent 50%),
-  repeating-linear-gradient(90deg,#2a2823 0 40px,#302d27 40px 80px),#23211d}
+  linear-gradient(160deg,#2b2924,#1e1c19)}
 .tile__img[data-art="porche"]{background:
   linear-gradient(90deg,rgba(238,106,31,.1),transparent 40%),
-  repeating-linear-gradient(60deg,#262420 0 30px,#2d2a24 30px 60px),linear-gradient(120deg,#34302a,#1f1d19)}
+  linear-gradient(120deg,#302d28,#1e1c19)}
 .tile__img::after{
   content:"";position:absolute;inset:0;
   background:linear-gradient(180deg,transparent 30%,rgba(15,14,12,.86) 100%);
