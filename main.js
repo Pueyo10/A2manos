@@ -134,7 +134,7 @@
   }
 
   /* ---------- form -> envío real (FormSubmit AJAX, fallback mailto) ---------- */
-  const FORM_ENDPOINT = 'https://formsubmit.co/ajax/lealsapedro@gmail.com';
+  const FORM_ENDPOINT = 'https://formsubmit.co/ajax/a2manospedrosa@gmail.com';
   const form = $('#form');
   const note = $('#formNote');
   if (form) {
@@ -189,7 +189,7 @@
           `Nombre: ${d.get('name')}\nTeléfono: ${d.get('phone')}\nEmail: ${d.get('email') || '—'}\n` +
           `Tipo de trabajo: ${d.get('type')}\n\n${d.get('msg')}`;
         window.location.href =
-          `mailto:lealsapedro@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+          `mailto:a2manospedrosa@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         note.textContent = 'No se pudo enviar automáticamente. Te abrimos el correo — o llámanos al 623 067 554.';
         note.className = 'form__note err';
       } finally {
